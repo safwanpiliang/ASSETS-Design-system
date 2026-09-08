@@ -1,0 +1,81 @@
+@theme {
+  /* ---- Warna — 21 warna canonical dari Color Main (node 1:2061) ---- */
+  --color-primary-100: #C9FAF0;
+  --color-primary-200: #5DE5DF;
+  --color-primary-300: #34C7CC;
+  --color-primary-400: #0298AB;
+  --color-primary-500: #017793;
+  --color-primary-600: #01597B;
+  --color-primary-700: #004063;
+
+  --color-secondary-100: #FCEECB;
+  --color-secondary-200: #FAD998;
+  --color-secondary-300: #F1BA63;
+  --color-secondary-400: #D16E05;
+  --color-secondary-500: #B35503;
+  --color-secondary-600: #964002;
+  --color-secondary-700: #642000;
+
+  --color-neutral-100: #FFFFFF;
+  --color-neutral-200: #FAFCFE;
+  --color-neutral-300: #F6F8FD;
+  --color-neutral-400: #F4F7FE;
+  --color-neutral-500: #E9EDF7;
+  --color-neutral-600: #E0E5F2;
+  --color-neutral-700: #A3B2D0;
+  --color-neutral-800: #7085AE;
+  --color-neutral-900: #475F8C;
+  --color-neutral-1000: #2B4774;
+
+  --color-red-100: #FB3748;
+  --color-red-200: #D00416;
+  --color-yellow-100: #FFDB43;
+  --color-yellow-200: #DFB400;
+  --color-green-100: #84EBB4;
+  --color-green-200: #1FC16B;
+
+  --color-disabled-fill: #F7F7F8;
+  --color-disabled-stroke: #E9EAEB;
+  --color-border-default: #E9EAEB;
+
+  /* ---- Font ---- */
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Headings — selalu font-bold di komponen, rasio line-height 1.5x di semua level */
+  --text-h1: 4.25rem;      --text-h1--line-height: 6.375rem;   /* 68px / 102px */
+  --text-h2: 3.5rem;       --text-h2--line-height: 5.25rem;    /* 56px / 84px  */
+  --text-h3: 2.875rem;     --text-h3--line-height: 4.3125rem;  /* 46px / 69px  */
+  --text-h4: 2.375rem;     --text-h4--line-height: 3.5625rem;  /* 38px / 57px  */
+  --text-h5: 2rem;         --text-h5--line-height: 3rem;       /* 32px / 48px  */
+  --text-h6: 1.625rem;     --text-h6--line-height: 2.4375rem;  /* 26px / 39px  */
+  --text-h7: 1.375rem;     --text-h7--line-height: 2.0625rem;  /* 22px / 33px  */
+
+  /* Body — B-1 font-medium, B-2..B-5 font-normal */
+  --text-b1: 1.125rem;     --text-b1--line-height: 1.6875rem;  /* 18px / 27px */
+  --text-b2: 1rem;         --text-b2--line-height: 1.5rem;     /* 16px / 24px */
+  --text-b3: 0.875rem;     --text-b3--line-height: 1.3125rem;  /* 14px / 21px */
+  --text-b4: 0.75rem;      --text-b4--line-height: 1.125rem;   /* 12px / 18px */
+  --text-b5: 0.625rem;     --text-b5--line-height: 0.9375rem;  /* 10px / 15px */
+
+  /* Shadow — skala elevasi E0 (flat) sampai E3 (modal/dialog) */
+  --shadow-e0: 0px 0px 0px 0px rgba(27, 28, 29, 0);
+  --shadow-e1: 0px 2px 4px 0px rgba(27, 28, 29, 0.04);
+  --shadow-e2: 0px 16px 32px -12px rgba(88, 92, 95, 0.1);
+  --shadow-e3: 0px 16px 40px -8px rgba(88, 92, 95, 0.16);
+
+  /* Radius — skala primitif dari light.tokens.json (aman ditambah, tidak menimpa
+     radius bawaan Tailwind yang penamaannya sm/md/lg/xl, bukan angka) */
+  --radius-1: 4px;
+  --radius-2: 8px;
+  --radius-3: 12px;
+  --radius-4: 16px;
+  --radius-5: 20px;
+  --radius-6: 24px;
+  --radius-7: 32px;
+  --radius-none: 0px;
+  --radius-full: 999px;
+
+  /* Spacing & Stroke SENGAJA TIDAK didefinisikan di sini — lihat komentar di
+     style-dictionary.config.mjs. Nilainya ada di tokens.json; pemetaan ke
+     utility Tailwind yang sudah ada didokumentasikan di simatkul-spacing-stroke.md */
+}
