@@ -13,6 +13,9 @@ integrasi package ini, bagian [Troubleshooting](#troubleshooting) dan
 [Batasan yang Diketahui](#batasan-yang-diketahui-known-limitations) di bawah
 berisi jawaban untuk pertanyaan yang paling sering muncul.
 
+![Contoh halaman Kurikulum dibangun dari komponen di package ini](docs/screenshots/kurikulum-page.png)
+<p align="center"><sub>Halaman nyata di repo ini (<code>src/pages/Kurikulum.tsx</code>) — Sidebar, StatCard, Button, Input, Table, dan Pagination semua dari package ini, bukan mockup.</sub></p>
+
 ---
 
 ## Daftar Isi
@@ -138,6 +141,65 @@ Semua diimpor dari `'simatkul-design-system'` (named export).
 | `Sidebar` | Nav aplikasi, fill-height otomatis di parent flex. `items` (data-driven), `logo` (slot penuh, WAJIB diisi ulang kalau dipakai project lain), `activeColor` (override warna aktif tanpa fork token). |
 | `Modal` | Dialog generik: `title`+`description`+`children` bebas+`actions`, `buttonLayout` (horizontal/vertical). Tutup lewat Escape/klik-luar/tombol aksi — tidak ada tombol X. |
 
+Screenshot di bawah diambil langsung dari halaman **Component Showcase**
+(`src/pages/Showcase.tsx`, jalankan `npm run dev` untuk buka sendiri) —
+render sungguhan, bukan mockup Figma:
+
+<table>
+<tr>
+<td width="50%">
+
+**Button** — 4 theme × 4 variant × 3 ukuran
+
+![Button](docs/screenshots/component-button.png)
+
+</td>
+<td width="50%">
+
+**Alert** — outline & filled × 5 status
+
+![Alert](docs/screenshots/component-alert.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Input** — semua status (default/success/warning/error/disabled)
+
+![Input](docs/screenshots/component-input.png)
+
+</td>
+<td width="50%">
+
+**Switch & Checkbox**
+
+![Switch dan Checkbox](docs/screenshots/component-form-controls.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Avatar** — 8 ukuran + fallback foto/ikon/inisial + status dot
+
+![Avatar](docs/screenshots/component-avatar.png)
+
+</td>
+<td width="50%">
+
+**Sidebar** — nav item, active state, avatar user, tombol logout
+
+![Sidebar](docs/screenshots/component-sidebar.png)
+
+</td>
+</tr>
+</table>
+
+**Table** — toolbar + kolom custom (`render`) + aksi per baris
+
+![Table](docs/screenshots/component-table.png)
+
 ### Contoh: Radio tanpa RadioGroup
 
 ```tsx
@@ -183,6 +245,8 @@ baru sendiri di luar package ini.
 | `yellow` | `#FFDB43` | `#DFB400` | | | | | | | | |
 | `green` | `#84EBB4` | `#1FC16B` | | | | | | | | |
 
+![Swatch 21 warna kanonik dari Component Showcase](docs/screenshots/tokens-colors.png)
+
 Aturan penting: **jangan pernah pakai warna hex di luar tabel ini** untuk
 komponen baru — itu aturan tetap dari pemilik design system ini. Kalau
 Figma menunjukkan warna yang tidak ada di sini, itu kemungkinan besar sisa
@@ -208,6 +272,8 @@ selalu 1.5× ukuran font.
 | `b3` | 14px | 21px | Regular |
 | `b4` | 12px | 18px | Regular |
 | `b5` | 10px | 15px | Regular |
+
+![Skala tipografi H1-H7 dan Body 1-5 dari Component Showcase](docs/screenshots/tokens-typography.png)
 
 ### Radius, Shadow, Spacing
 
