@@ -28,6 +28,10 @@ import { ScheduleWidget } from '../../src/components/ScheduleWidget/ScheduleWidg
 import { Steps, type StepItem } from '../../src/components/Steps/Steps'
 import { ScheduleGrid, type ScheduleGridEntry } from '../../src/components/ScheduleGrid/ScheduleGrid'
 import { ScheduleDots } from '../../src/components/ScheduleGrid/ScheduleDots'
+import { Navbar, type NavbarLink } from '../../src/components/Navbar/Navbar'
+import { Footer, type FooterColumn } from '../../src/components/Footer/Footer'
+import Bolt from '@solar-icons/react/ui/Bolt'
+import Letter from '@solar-icons/react/messages/Letter'
 import { SimatkulLogo } from './SimatkulLogo'
 import Calendar from '@solar-icons/react/time/Calendar'
 import StarIcon from '@solar-icons/react/like/Star'
@@ -147,6 +151,21 @@ const breadcrumbItemsLong: BreadcrumbItem[] = [
   { key: 'b', label: 'Kurikulum' },
   { key: 'c', label: 'Semester' },
   { key: 'current', label: 'Gasal 2026/2027' },
+]
+
+const navLinks: NavbarLink[] = [
+  { key: 'home', label: 'Beranda', active: true },
+  { key: 'sekretariatan', label: 'Kesekretariatan' },
+  { key: 'vokasipedia', label: 'VokasiPedia' },
+  { key: 'univokasi', label: 'Uni-Vokasi' },
+  { key: 'aduan', label: 'Aduan Vokasi' },
+  { key: 'galeri', label: 'Galeri' },
+]
+
+const footerColumns: FooterColumn[] = [
+  { key: 'a', title: 'Lorem ipsum dolor', links: Array.from({ length: 5 }, (_, i) => ({ key: String(i), label: 'Lorem ipsum' })) },
+  { key: 'b', title: 'Lorem ipsum dolor', links: Array.from({ length: 5 }, (_, i) => ({ key: String(i), label: 'Lorem ipsum' })) },
+  { key: 'c', title: 'Lorem ipsum dolor', links: Array.from({ length: 5 }, (_, i) => ({ key: String(i), label: 'Lorem ipsum' })) },
 ]
 
 const stepItems: StepItem[] = [
@@ -633,6 +652,31 @@ export default function ShowcasePage() {
             <Steps steps={stepItems} activeIndex={1} orientation="horizontal" textPosition="center" showNumbers={false} />
           </div>
         </div>
+      </Section>
+
+      <Section title="Navbar">
+        <div className="overflow-hidden rounded-2 border border-neutral-500">
+          <Navbar
+            logo={<Text variant="h6" className="font-bold text-primary-500">ASSETS</Text>}
+            links={navLinks}
+            actions={
+              <>
+                <Button variant="ghost" size="md">Sign up</Button>
+                <Button theme="primary" variant="solid" size="md" iconLeft={<Bolt weight="BoldDuotone" />}>Lorem Ipsum</Button>
+              </>
+            }
+          />
+        </div>
+      </Section>
+
+      <Section title="Footer">
+        <Footer
+          logo={<Text variant="h6" className="font-bold text-white">ASSETS</Text>}
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore"
+          email="loremipsum@mail.ugm.ac.id"
+          emailIcon={<Letter weight="BoldDuotone" />}
+          columns={footerColumns}
+        />
       </Section>
 
       <Section title="Sidebar (dalam kotak terbatas — biasanya full height)">
