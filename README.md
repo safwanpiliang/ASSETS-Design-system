@@ -195,11 +195,20 @@ Semua diimpor dari `'assets-design-system'` (named export).
 | `Stepper` | Dua tombol (kurang/tambah) murni — **tidak menampilkan angka sendiri**, nilai dikelola pemanggil. |
 | `Tooltip` | Bubble info. Mode hover otomatis (tanpa prop `open`) atau terkontrol (`open` diisi eksplisit, untuk tips onboarding). Auto-flip/shift/portal via Floating UI. |
 | `Avatar` | 8 ukuran (`tiny`…`xxxl`). Otomatis fallback: `src` foto gagal/kosong → `icon` → huruf inisial. `status` = titik hijau online. |
-| `StatCard` | Kartu statistik kecil (ikon + angka + label). |
+| `StatCard` | Kartu statistik kecil (ikon + angka + label). `variant` (neutral/color) × `status` (primary/secondary/error/warning/success) untuk versi latar warna solid. |
 | `Table` | Data-driven: `columns` (dengan `render` per kolom untuk sel custom), `data`, `rowKey`. Opsional `toolbar`. |
 | `Pagination` | `page`, `totalPages`, `onPageChange`. ⚠️ belum ada pola ellipsis untuk puluhan halaman — lihat [Batasan](#batasan-yang-diketahui-known-limitations). |
 | `Sidebar` | Nav aplikasi, fill-height otomatis di parent flex. `items` (data-driven), `logo` (slot penuh, **prop wajib** — tidak ada default brand), `activeColor` (override warna aktif tanpa fork token). |
 | `Modal` | Dialog generik: `title`+`description`+`children` bebas+`actions`, `buttonLayout` (horizontal/vertical). Tutup lewat Escape/klik-luar/tombol aksi — tidak ada tombol X. |
+| `Breadcrumbs` | `items[]` generik (bukan trail tetap 3-segmen seperti demo Figma). Item pertama & terakhir ditonjolkan, tengah diredupkan. `separator` (text/icon), `maxItems` untuk mode ringkas (first…last). |
+| `Chip` | `variant` (solid/tint/outline) × `status` (default/primary/secondary/error/warning/success), 2 ukuran, `avatar` slot, `removable`. |
+| `Card` / `CardCta` | `Card`: `orientation` (vertical/horizontal), slot `image`/`chip`/`actions` (biasanya diisi `Chip`+`Button`). `CardCta`: layout marketing (heading besar+deskripsi+aksi+gambar). |
+| `ScheduleWidget` | Kartu agenda/jadwal ringkas (bukan grid kalender — lihat `DatePicker` untuk itu). `header` slot bebas, `items[]` (bar warna atau ikon di kiri), `onViewAll`. |
+| `Steps` | Progress step indicator (bukan `Stepper` +/- yang sudah ada — nama beda sengaja untuk hindari tabrakan). `orientation` (horizontal/vertical) × `textPosition` (left/center), `activeIndex` menentukan status complete/active/inactive tiap step. |
+| `ScheduleGrid` / `ScheduleDots` | `ScheduleGrid`: jadwal mingguan per-baris dengan blok multi-sesi (`entries[]` punya `startSession`+`span`). `ScheduleDots`: indikator titik ringkas per-sesi, dipasang sebagai `render` kolom di `Table` biasa (bukan komponen tabel terpisah). |
+| `Navbar` | Navbar publik: `logo` (flex-start), `links[]` (center, auto), `actions` slot (flex-end). |
+| `Footer` | `logo`+`description`+`email` di kiri, `columns[]` (judul+daftar link) di kanan — sepenuhnya data-driven. |
+| `DatePicker` / `DateRangePicker` / `DateTimePicker` / `MonthPicker` | Grid kalender native (tanpa dependency date-library). `DatePicker`: satu tanggal. `DateRangePicker`: dua bulan berdampingan, klik dua kali untuk pilih rentang. `DateTimePicker`: kalender + daftar slot waktu. `MonthPicker`: grid 12 bulan per tahun. |
 
 Screenshot di bawah diambil langsung dari halaman **Component Showcase**
 (`src/pages/Showcase.tsx`, jalankan `npm run dev` untuk buka sendiri) —
@@ -561,6 +570,16 @@ bug tersembunyi:
   kode, bukan direplikasi.
 - **Tidak ada `RadioGroup`** (lihat [Katalog Komponen](#katalog-komponen)) —
   keputusan desain, bukan kelalaian.
+- **`DateRangePicker`'s interaksi klik-dua-kali** (klik pertama = start, klik
+  kedua = end) bukan sesuatu yang ditunjukkan Figma (yang cuma mockup statis)
+  — itu pola umum date-range-picker, bukan hasil ekstraksi.
+- **`ScheduleGrid`** mengasumsikan entry tidak saling tumpang-tindih
+  (overlapping) pada `day`+`startSession` yang sama — tidak ada penanganan
+  konflik karena Figma tidak menunjukkan skenario itu.
+- **Outline `Chip`** untuk status secondary/error/warning/success
+  diekstrapolasi dari pola primary/default (border=teks warna sama) — cuma
+  primary & default yang diverifikasi langsung ke Figma (lihat komentar di
+  `src/components/Chip/Chip.tsx`).
 
 ## Development Lokal (di repo ini)
 
