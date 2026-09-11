@@ -67,10 +67,14 @@ export function Steps({
         const status: StepStatus = i < activeIndex ? 'complete' : i === activeIndex ? 'active' : 'inactive'
         const isLast = i === steps.length - 1
 
+        // Vertikal: connector HARUS pas di bawah ikon (kolom selebar ikon,
+        // rata kiri), bukan di tengah gabungan ikon+angka+teks — dicek
+        // langsung dari Figma: connector-nya dibungkus kotak selebar ikon
+        // (bukan lebar seluruh baris) lalu di-center di dalam kotak itu saja.
         return (
           <div
             key={step.key}
-            className={cn('flex', isVertical ? 'flex-col items-center' : 'items-center', !isLast && !isVertical && 'flex-1')}
+            className={cn('flex', isVertical ? 'flex-col items-start' : 'items-center', !isLast && !isVertical && 'flex-1')}
           >
             <div className={cn('flex', isCenter ? 'flex-col items-center gap-2' : 'items-center gap-2')}>
               <StepIcon status={status} />
@@ -86,15 +90,19 @@ export function Steps({
                 {step.optionalLabel && <span className="text-b4 text-neutral-800">{step.optionalLabel}</span>}
               </div>
             </div>
-            {!isLast && (
-              <div
-                className={cn(
-                  'shrink-0 rounded-full bg-primary-400',
-                  status !== 'complete' && 'opacity-12',
-                  isVertical ? 'my-2 h-8 w-[3px]' : 'mx-2 h-[3px] flex-1'
-                )}
-              />
-            )}
+            {!isLast &&
+              (isVertical ? (
+                <div className="flex w-5 shrink-0 justify-center py-2">
+                  <div className={cn('h-8 w-[3px] rounded-full bg-primary-400', status !== 'complete' && 'opacity-12')} />
+                </div>
+              ) : (
+                <div
+                  className={cn(
+                    'mx-2 h-[3px] flex-1 shrink-0 rounded-full bg-primary-400',
+                    status !== 'complete' && 'opacity-12'
+                  )}
+                />
+              ))}
           </div>
         )
       })}
