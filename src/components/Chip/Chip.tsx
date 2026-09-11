@@ -53,6 +53,13 @@ const chipVariants = cva('inline-flex items-center rounded-full', {
 // ukuran), vertikal 3px (md dapat tambahan dari padding container p-1).
 const textPaddingBySize = { sm: 'px-1.5', md: 'px-1.5 py-[3px]' } as const
 
+// Ikon hapus HARUS lebih kecil di size="sm" (16px) daripada "md" (22px) —
+// kalau dipaksa sama, ikon 22px tidak muat dalam tinggi chip small (24px)
+// dan bikin chip-nya membengkak jadi 28px, beda dari chip small tanpa
+// remove button (tetap 24px). Ini persis nilai asli dari Figma, bukan rasio
+// yang disamaratakan.
+const removeIconSizeBySize = { sm: 'size-4', md: 'size-[22px]' } as const
+
 // Catatan: font Figma Chip literal 13px/18px (Inter) — di luar skala b1-b5
 // kita (b4 terdekat = 12px/18px). Dinormalisasi ke text-b4 (Plus Jakarta
 // Sans) mengikuti aturan proyek: selalu pakai token kanonik, bukan nilai
@@ -77,7 +84,10 @@ export function Chip({ variant, status, size = 'md', children, avatar, removable
           type="button"
           onClick={onRemove}
           aria-label="Hapus"
-          className="flex size-[22px] shrink-0 items-center justify-center opacity-70 transition-opacity hover:opacity-100 [&>svg]:size-full"
+          className={cn(
+            'flex shrink-0 items-center justify-center opacity-70 transition-opacity hover:opacity-100 [&>svg]:size-full',
+            removeIconSizeBySize[size ?? 'md']
+          )}
         >
           <CloseCircle weight="BoldDuotone" />
         </button>
