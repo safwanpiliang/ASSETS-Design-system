@@ -22,6 +22,8 @@ import { Table, type TableColumn } from '../../src/components/Table/Table'
 import { Sidebar, type SidebarItem } from '../../src/components/Sidebar/Sidebar'
 import { Breadcrumbs, type BreadcrumbItem } from '../../src/components/Breadcrumbs/Breadcrumbs'
 import { Chip } from '../../src/components/Chip/Chip'
+import { Card } from '../../src/components/Card/Card'
+import { CardCta } from '../../src/components/Card/CardCta'
 import { SimatkulLogo } from './SimatkulLogo'
 
 import Database from '@solar-icons/react/ui/Database'
@@ -482,6 +484,51 @@ export default function ShowcasePage() {
             <Chip variant="tint" status="secondary" size="sm">Small</Chip>
             <Chip variant="tint" status="secondary" size="sm" removable onRemove={() => {}}>Small removable</Chip>
           </div>
+        </div>
+      </Section>
+
+      <Section title="Card">
+        <div className="flex flex-wrap items-start gap-6">
+          <Card
+            orientation="vertical"
+            className="w-[430px]"
+            image={<img src="https://picsum.photos/seed/assets1/464/348" alt="" />}
+            chip={<Chip variant="tint" status="secondary">Kementrian Minat dan Bakat</Chip>}
+            title="Pekan Olahraga Vokasi dan Vocational Art"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do…"
+            actions={
+              <>
+                <Button variant="ghost" size="sm">Selengkapnya</Button>
+                <Button variant="solid" size="sm">Selengkapnya</Button>
+              </>
+            }
+          />
+          <Card
+            orientation="horizontal"
+            className="w-[600px]"
+            image={<img src="https://picsum.photos/seed/assets2/282/211" alt="" />}
+            chip={<Chip variant="tint" status="secondary">Kementrian Minat dan Bakat</Chip>}
+            title="Pekan Olahraga Vokasi dan Vocational Art"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do…"
+            actions={
+              <>
+                <Button variant="ghost" size="sm">Selengkapnya</Button>
+                <Button variant="solid" size="sm">Selengkapnya</Button>
+              </>
+            }
+          />
+          <CardCta
+            className="w-[680px]"
+            title="Try Venus for free now!"
+            description="Enter in this creative world. Venus is the best product for your business."
+            image={<img src="https://picsum.photos/seed/assets3/292/286" alt="" />}
+            actions={
+              <>
+                <Button theme="primary" variant="solid">Lihat Penawaran</Button>
+                <Button theme="primary" variant="ghost">Lewati</Button>
+              </>
+            }
+          />
         </div>
       </Section>
 
