@@ -25,6 +25,7 @@ import { Chip } from '../../src/components/Chip/Chip'
 import { Card } from '../../src/components/Card/Card'
 import { CardCta } from '../../src/components/Card/CardCta'
 import { ScheduleWidget } from '../../src/components/ScheduleWidget/ScheduleWidget'
+import { Steps, type StepItem } from '../../src/components/Steps/Steps'
 import { SimatkulLogo } from './SimatkulLogo'
 import Calendar from '@solar-icons/react/time/Calendar'
 import StarIcon from '@solar-icons/react/like/Star'
@@ -144,6 +145,12 @@ const breadcrumbItemsLong: BreadcrumbItem[] = [
   { key: 'b', label: 'Kurikulum' },
   { key: 'c', label: 'Semester' },
   { key: 'current', label: 'Gasal 2026/2027' },
+]
+
+const stepItems: StepItem[] = [
+  { key: '1', title: 'Account Details' },
+  { key: '2', title: 'Personal Info' },
+  { key: '3', title: 'Social Links' },
 ]
 
 const demoNavItems: SidebarItem[] = [
@@ -570,6 +577,16 @@ export default function ShowcasePage() {
               </>
             }
           />
+        </div>
+      </Section>
+
+      <Section title="Steps">
+        <div className="flex flex-col gap-8 rounded-2 bg-white p-6">
+          <Steps steps={stepItems} activeIndex={1} orientation="horizontal" textPosition="left" />
+          <div className="flex gap-16">
+            <Steps steps={stepItems} activeIndex={1} orientation="vertical" textPosition="left" className="h-[220px]" />
+            <Steps steps={stepItems} activeIndex={1} orientation="horizontal" textPosition="center" showNumbers={false} />
+          </div>
         </div>
       </Section>
 
