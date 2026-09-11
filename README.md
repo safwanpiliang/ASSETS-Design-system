@@ -202,7 +202,7 @@ Semua diimpor dari `'assets-design-system'` (named export).
 | `Modal` | Dialog generik: `title`+`description`+`children` bebas+`actions`, `buttonLayout` (horizontal/vertical). Tutup lewat Escape/klik-luar/tombol aksi — tidak ada tombol X. |
 | `Breadcrumbs` | `items[]` generik (bukan trail tetap 3-segmen seperti demo Figma). Item pertama & terakhir ditonjolkan, tengah diredupkan. `separator` (text/icon), `maxItems` untuk mode ringkas (first…last). |
 | `Chip` | `variant` (solid/tint/outline) × `status` (default/primary/secondary/error/warning/success), 2 ukuran, `avatar` slot, `removable`. |
-| `Card` / `CardCta` | `Card`: `orientation` (vertical/horizontal), slot `image`/`chip`/`actions` (biasanya diisi `Chip`+`Button`). `CardCta`: layout marketing (heading besar+deskripsi+aksi+gambar). |
+| `Card` / `CardCta` | `Card`: `orientation` (vertical/horizontal), slot `image`/`chip`/`actions` (biasanya diisi `Chip` **`size="sm"`**+`Button`). Judul+deskripsi dibatasi tinggi tetap (`line-clamp-2` pada deskripsi) mengikuti Figma. `CardCta`: layout marketing (heading besar+deskripsi+aksi+gambar). |
 | `ScheduleWidget` | Kartu agenda/jadwal ringkas (bukan grid kalender — lihat `DatePicker` untuk itu). `header` slot bebas, `items[]` (bar warna atau ikon di kiri), `onViewAll`. |
 | `Steps` | Progress step indicator (bukan `Stepper` +/- yang sudah ada — nama beda sengaja untuk hindari tabrakan). `orientation` (horizontal/vertical) × `textPosition` (left/center), `activeIndex` menentukan status complete/active/inactive tiap step. |
 | `ScheduleGrid` / `ScheduleDots` | `ScheduleGrid`: jadwal mingguan per-baris dengan blok multi-sesi (`entries[]` punya `startSession`+`span`). `ScheduleDots`: indikator titik ringkas per-sesi, dipasang sebagai `render` kolom di `Table` biasa (bukan komponen tabel terpisah). |
@@ -263,11 +263,47 @@ render sungguhan, bukan mockup Figma:
 
 </td>
 </tr>
+<tr>
+<td width="50%">
+
+**Chip** — solid/tint/outline × 6 status, 2 ukuran, `avatar` slot, `removable`
+
+![Chip](docs/screenshots/component-chip.png)
+
+</td>
+<td width="50%">
+
+**Card** — StatCard, ScheduleWidget (bar & ikon list), Table
+
+![Card, StatCard, ScheduleWidget](docs/screenshots/component-card.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Steps** — horizontal & vertical, connector rata dengan ikon
+
+![Steps](docs/screenshots/component-steps.png)
+
+</td>
+<td width="50%">
+
+**Breadcrumbs** — separator text/icon, mode ringkas (`maxItems`)
+
+![Breadcrumbs](docs/screenshots/component-breadcrumbs.png)
+
+</td>
+</tr>
 </table>
 
 **Table** — toolbar + kolom custom (`render`) + aksi per baris
 
 ![Table](docs/screenshots/component-table.png)
+
+**Date Picker** — `DatePicker`, `DateRangePicker` (2 bulan), `DateTimePicker`, `MonthPicker`
+
+![Date Picker](docs/screenshots/component-datepicker.png)
 
 ### Contoh: Radio tanpa RadioGroup
 
@@ -580,6 +616,11 @@ bug tersembunyi:
   diekstrapolasi dari pola primary/default (border=teks warna sama) — cuma
   primary & default yang diverifikasi langsung ke Figma (lihat komentar di
   `src/components/Chip/Chip.tsx`).
+- **`Input`'s state Focus** di Figma membuat helper-text (yang statusnya
+  `default`) ikut berubah warna jadi primary selama field di-fokus — belum
+  diimplementasikan (butuh `group`/`group-focus-within:` ke elemen helper
+  text yang letaknya di luar wrapper input) karena murni kosmetik dan tidak
+  pernah dilaporkan sebagai masalah.
 
 ## Development Lokal (di repo ini)
 
