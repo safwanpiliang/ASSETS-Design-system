@@ -485,7 +485,7 @@ export default function ShowcasePage() {
           <ScheduleWidget
             header={
               <div className="flex w-full items-center gap-2.5">
-                <Text variant="h5" className="flex-1">27 May</Text>
+                <Text variant="h5" className="flex-1 text-neutral-1000">27 May</Text>
                 <Button theme="primary" variant="solid" size="sm" iconLeft={<Calendar weight="BoldDuotone" />} />
               </div>
             }
