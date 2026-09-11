@@ -26,6 +26,8 @@ import { Card } from '../../src/components/Card/Card'
 import { CardCta } from '../../src/components/Card/CardCta'
 import { ScheduleWidget } from '../../src/components/ScheduleWidget/ScheduleWidget'
 import { Steps, type StepItem } from '../../src/components/Steps/Steps'
+import { ScheduleGrid, type ScheduleGridEntry } from '../../src/components/ScheduleGrid/ScheduleGrid'
+import { ScheduleDots } from '../../src/components/ScheduleGrid/ScheduleDots'
 import { SimatkulLogo } from './SimatkulLogo'
 import Calendar from '@solar-icons/react/time/Calendar'
 import StarIcon from '@solar-icons/react/like/Star'
@@ -497,6 +499,49 @@ export default function ShowcasePage() {
               <Input variant="filled" placeholder="Cari" leftIcon={<Magnifer weight="LineDuotone" />} className="w-64" />
               <Button theme="primary" variant="solid" size="md">Tambah</Button>
             </>
+          }
+        />
+
+        <Table
+          columns={[
+            { key: 'name', header: 'Nama Dosen', width: '220px' },
+            { key: 'senin', header: 'Senin', align: 'center', render: (r) => <ScheduleDots occupied={r.senin} /> },
+            { key: 'selasa', header: 'Selasa', align: 'center', render: (r) => <ScheduleDots occupied={r.selasa} /> },
+          ]}
+          data={[
+            { id: 1, name: 'Yohana Ika Harnita Sari', senin: [false, false, false, true, true], selasa: [true, false, false, false, false] },
+          ]}
+          rowKey={(r) => r.id}
+        />
+      </Section>
+
+      <Section title="ScheduleGrid">
+        <ScheduleGrid
+          toolbar={
+            <>
+              <Input variant="filled" placeholder="Semua dosen" className="w-64" />
+              <Button theme="primary" variant="solid" size="md">Ekspor to PDF</Button>
+            </>
+          }
+          rowHeader={
+            <>
+              <p className="text-b3 font-bold text-neutral-1000">Dr. Sri Mulyana, M.Kom</p>
+              <p className="text-b5 text-neutral-1000">Beban Dosen: 14 SKS</p>
+            </>
+          }
+          sessions={[1, 2, 3, 4, 5]}
+          days={[
+            { key: 'senin', label: 'Senin' },
+            { key: 'selasa', label: 'Selasa' },
+            { key: 'rabu', label: 'Rabu' },
+          ]}
+          entries={
+            [
+              { day: 'senin', startSession: 0, title: 'Matematika Teknik', subtitle: 'PL1AA - CU 208' },
+              { day: 'senin', startSession: 2, title: 'Rangkaian Listrik DC', subtitle: 'PL1AA - CU 208' },
+              { day: 'selasa', startSession: 0, span: 2, title: 'Praktikum Instalasi Listrik', subtitle: 'PL1AA - CU 208' },
+              { day: 'rabu', startSession: 2, title: 'Matematika Teknik', subtitle: 'PL1AA - CU 208' },
+            ] as ScheduleGridEntry[]
           }
         />
       </Section>
