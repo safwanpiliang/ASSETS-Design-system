@@ -20,6 +20,8 @@ import { Avatar, type AvatarSize } from '../../src/components/Avatar/Avatar'
 import { StatCard } from '../../src/components/StatCard/StatCard'
 import { Table, type TableColumn } from '../../src/components/Table/Table'
 import { Sidebar, type SidebarItem } from '../../src/components/Sidebar/Sidebar'
+import { Breadcrumbs, type BreadcrumbItem } from '../../src/components/Breadcrumbs/Breadcrumbs'
+import { Chip } from '../../src/components/Chip/Chip'
 import { SimatkulLogo } from './SimatkulLogo'
 
 import Database from '@solar-icons/react/ui/Database'
@@ -123,6 +125,20 @@ const dropdownOptions: DropdownOption[] = [
   { key: 'staff', label: 'Staff Akademik', icon: <BookmarkSquare weight="BoldDuotone" /> },
   { key: 'admin', label: 'Admin', icon: <Database weight="BoldDuotone" /> },
   { key: 'lainnya', label: 'Lainnya', icon: <Bell weight="BoldDuotone" /> },
+]
+
+const breadcrumbItems: BreadcrumbItem[] = [
+  { key: 'home', label: 'Beranda' },
+  { key: 'kurikulum', label: 'Master Data' },
+  { key: 'current', label: 'Semester Gasal' },
+]
+
+const breadcrumbItemsLong: BreadcrumbItem[] = [
+  { key: 'home', label: 'Beranda' },
+  { key: 'a', label: 'Master Data' },
+  { key: 'b', label: 'Kurikulum' },
+  { key: 'c', label: 'Semester' },
+  { key: 'current', label: 'Gasal 2026/2027' },
 ]
 
 const demoNavItems: SidebarItem[] = [
@@ -433,6 +449,40 @@ export default function ShowcasePage() {
             </>
           }
         />
+      </Section>
+
+      <Section title="Breadcrumbs">
+        <div className="flex flex-col gap-4 rounded-2 bg-white p-6">
+          <Breadcrumbs items={breadcrumbItems} separator="text" />
+          <Breadcrumbs items={breadcrumbItems} separator="icon" />
+          <Breadcrumbs items={breadcrumbItemsLong} separator="text" maxItems={3} />
+        </div>
+      </Section>
+
+      <Section title="Chip">
+        <div className="flex flex-col gap-4 rounded-2 bg-white p-6">
+          <div className="flex flex-wrap items-center gap-2">
+            {(['default', 'primary', 'secondary', 'error', 'warning', 'success'] as const).map((status) => (
+              <Chip key={status} variant="solid" status={status}>{status}</Chip>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {(['default', 'primary', 'secondary', 'error', 'warning', 'success'] as const).map((status) => (
+              <Chip key={status} variant="tint" status={status}>{status}</Chip>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {(['default', 'primary', 'secondary', 'error', 'warning', 'success'] as const).map((status) => (
+              <Chip key={status} variant="outline" status={status}>{status}</Chip>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Chip variant="tint" status="primary" avatar={<Avatar size="tiny" letter="A" />}>Admin 1</Chip>
+            <Chip variant="solid" status="primary" removable onRemove={() => {}}>Removable</Chip>
+            <Chip variant="tint" status="secondary" size="sm">Small</Chip>
+            <Chip variant="tint" status="secondary" size="sm" removable onRemove={() => {}}>Small removable</Chip>
+          </div>
+        </div>
       </Section>
 
       <Section title="Sidebar (dalam kotak terbatas — biasanya full height)">
