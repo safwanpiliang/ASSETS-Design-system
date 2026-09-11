@@ -1,8 +1,8 @@
 import NotebookBookmark from '@solar-icons/react/school/NotebookBookmark'
 
-// Contoh isi slot `logo` Sidebar — SIMATKUL-spesifik, sengaja hidup di
-// halaman preview (bukan di dalam komponen Sidebar itu sendiri) karena
-// Sidebar dipakai lintas project ASSETS dengan branding masing-masing.
+// Contoh isi slot `logo` Sidebar — SIMATKUL-spesifik, sengaja hidup di app
+// preview ini (bukan di dalam komponen Sidebar itu sendiri) karena Sidebar
+// dipakai lintas project ASSETS dengan branding masing-masing.
 export function SimatkulLogo() {
   return (
     <div className="flex items-center gap-2.5">

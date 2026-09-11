@@ -20,7 +20,7 @@ const buttonVariants = cva(
       },
       // Nama axis ini sengaja "variant", bukan "type" — "type" bentrok dengan
       // atribut native <button type="submit|reset|button">, ketahuan pas
-      // vite-plugin-dts generate declaration file (TS2320: Interface cannot
+      // generate declaration file (.d.ts) (TS2320: Interface cannot
       // simultaneously extend ... incompatible 'type').
       variant: {
         // rounded-2 = Radius.2 (8px), lihat light.tokens.json

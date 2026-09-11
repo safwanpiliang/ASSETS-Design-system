@@ -40,7 +40,7 @@ const outlineAccentText: Record<string, string> = {
 export interface AlertProps
   // Omit 'title': native title (tooltip string) bentrok dengan title kita
   // sendiri (ReactNode, judul alert) — ketahuan dari error TS2430 saat
-  // vite-plugin-dts generate declaration file.
+  // generate declaration file (.d.ts).
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
     VariantProps<typeof alertVariants> {
   icon?: ReactNode

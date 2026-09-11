@@ -1,23 +1,25 @@
+'use client'
+
 import { useState } from 'react'
-import { Button } from '../components/Button/Button'
-import { Input } from '../components/Input/Input'
-import { Text } from '../components/Text/Text'
-import { Alert, getAlertActionTextClass } from '../components/Alert/Alert'
-import { Switch } from '../components/Switch/Switch'
-import { SwitchField } from '../components/Switch/SwitchField'
-import { Checkbox } from '../components/Checkbox/Checkbox'
-import { CheckboxField } from '../components/Checkbox/CheckboxField'
-import { Radio } from '../components/Radio/Radio'
-import { RadioField } from '../components/Radio/RadioField'
-import { Pagination } from '../components/Pagination/Pagination'
-import { Dropdown, type DropdownOption } from '../components/Dropdown/Dropdown'
-import { Modal } from '../components/Modal/Modal'
-import { Stepper } from '../components/Stepper/Stepper'
-import { Tooltip } from '../components/Tooltip/Tooltip'
-import { Avatar, type AvatarSize } from '../components/Avatar/Avatar'
-import { StatCard } from '../components/StatCard/StatCard'
-import { Table, type TableColumn } from '../components/Table/Table'
-import { Sidebar, type SidebarItem } from '../components/Sidebar/Sidebar'
+import { Button } from '../../src/components/Button/Button'
+import { Input } from '../../src/components/Input/Input'
+import { Text } from '../../src/components/Text/Text'
+import { Alert, getAlertActionTextClass } from '../../src/components/Alert/Alert'
+import { Switch } from '../../src/components/Switch/Switch'
+import { SwitchField } from '../../src/components/Switch/SwitchField'
+import { Checkbox } from '../../src/components/Checkbox/Checkbox'
+import { CheckboxField } from '../../src/components/Checkbox/CheckboxField'
+import { Radio } from '../../src/components/Radio/Radio'
+import { RadioField } from '../../src/components/Radio/RadioField'
+import { Pagination } from '../../src/components/Pagination/Pagination'
+import { Dropdown, type DropdownOption } from '../../src/components/Dropdown/Dropdown'
+import { Modal } from '../../src/components/Modal/Modal'
+import { Stepper } from '../../src/components/Stepper/Stepper'
+import { Tooltip } from '../../src/components/Tooltip/Tooltip'
+import { Avatar, type AvatarSize } from '../../src/components/Avatar/Avatar'
+import { StatCard } from '../../src/components/StatCard/StatCard'
+import { Table, type TableColumn } from '../../src/components/Table/Table'
+import { Sidebar, type SidebarItem } from '../../src/components/Sidebar/Sidebar'
 import { SimatkulLogo } from './SimatkulLogo'
 
 import Database from '@solar-icons/react/ui/Database'
@@ -146,7 +148,7 @@ export default function ShowcasePage() {
     <div className="flex min-h-screen flex-col gap-10 bg-neutral-300 p-10">
       <div>
         <Text variant="h4">Component Showcase</Text>
-        <p className="text-b2 text-neutral-800">Semua komponen design system SIMATKUL di satu halaman.</p>
+        <p className="text-b2 text-neutral-800">Semua komponen ASSETS Design System di satu halaman.</p>
       </div>
 
       <Section title="Warna — Color Main (21 canonical)">

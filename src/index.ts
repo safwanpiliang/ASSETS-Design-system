@@ -1,8 +1,8 @@
-// Entry point library. Halaman di src/pages/ (Showcase, dst) SENGAJA
-// tidak diekspor dari sini — itu cuma alat bantu preview lokal (npm run dev),
-// bukan bagian dari package yang dipakai konsumen.
-
-import './styles/index.css'
+// Entry point library. CSS-nya di-build TERPISAH lewat Tailwind CLI (baca
+// src/styles/index.css langsung, lihat script "build:css" di package.json)
+// — bukan lewat import di sini, supaya proses Tailwind (scan class + compile
+// @theme) tetap jalan penuh walau bundler JS-nya (tsup/esbuild) tidak tahu
+// apa-apa soal Tailwind.
 
 export * from './lib/cn'
 

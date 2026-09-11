@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Preview ini punya package.json sendiri (workspace terpisah dari root),
+   jadi Tailwind v4 tidak otomatis tahu harus scan folder library ../../src
+   di luar direktori preview/ ini — daftarkan eksplisit lewat @source. */
+@source "../../src/components";
+
+@import "../../src/styles/tokens.css";
+
+body {
+  margin: 0;
+}

@@ -150,6 +150,12 @@ memang client-only dan aman), dan semua ID yang di-generate otomatis
 yang dijamin sinkron antara render server dan client — jadi tidak akan ada
 warning hydration mismatch.
 
+Ini bukan cuma klaim di atas kertas — repo ini sendiri punya app Next.js
+beneran di folder `preview/` yang dipakai untuk develop komponen sehari-hari
+(lihat [Development Lokal](#development-lokal-di-repo-ini)), jadi setiap
+komponen (termasuk yang pakai hooks/Floating UI seperti Modal & Dropdown)
+sudah teruji jalan di App Router sungguhan, bukan cuma dites lewat Vite.
+
 ## Apakah saya wajib install Tailwind?
 
 **Tidak, untuk sekadar memakai komponennya.** `dist/style.css` yang di-import
@@ -338,7 +344,7 @@ selalu 1.5× ukuran font.
 - **Spacing & Stroke**: sengaja **tidak** jadi class Tailwind kustom (akan
   menimpa skala spacing bawaan Tailwind secara diam-diam) — dipetakan ke
   utility Tailwind standar (`p-2`, `border-2`, dst). Detail lengkap ada di
-  komentar `vite.lib.config.ts`/kode sumber token.
+  komentar `src/styles/tokens.css`.
 
 ## Ikon (Solar Icons)
 
@@ -469,9 +475,10 @@ errornya:
 ```bash
 cd node_modules/assets-design-system && npm run build
 ```
-Penyebab paling umum: versi Node.js terlalu lama (butuh 18+), atau cache
-`node_modules/.vite` di dalam package basi — hapus `node_modules/.vite` di
-dalam folder package tersebut lalu install ulang.
+Penyebab paling umum: versi Node.js terlalu lama (butuh 18+), atau
+`node_modules` di dalam package itu korup/setengah ter-install — hapus
+`node_modules/assets-design-system` lalu `npm install` ulang dari root
+project kamu.
 
 **Error `Cannot read properties of null (reading 'useContext')` atau
 "Invalid hook call"**
@@ -557,29 +564,52 @@ bug tersembunyi:
 
 ## Development Lokal (di repo ini)
 
+Repo ini monorepo-lite npm workspaces: root = library-nya sendiri,
+`preview/` = app Next.js buat lihat komponen secara visual saat develop.
+
 ```bash
-npm install
-npm run dev     # buka preview: halaman "Component Showcase" (semua komponen)
+npm install     # sekali jalan, otomatis install root + preview/ sekaligus (npm workspaces)
+npm run dev     # buka preview Next.js (default http://localhost:3000)
 npm run build   # build library ke dist/ (otomatis jalan lewat "prepare" saat konsumen install dari Git)
 ```
 
-`npm run dev` memakai `vite.config.ts` (app biasa). `npm run build` memakai
-`vite.lib.config.ts` (Library Mode) — dua config terpisah supaya halaman
-preview (`src/pages/`) tidak pernah ikut ke-bundle ke package yang
-di-install konsumen.
+- **`npm run build`** = `tsup` (bundle `src/index.ts` → `dist/index.mjs` +
+  `index.cjs` + `.d.ts`) lalu Tailwind CLI (`src/styles/index.css` →
+  `dist/style.css`). Tidak pakai bundler/dev-server framework apa pun untuk
+  proses ini — cuma dua CLI tool, keduanya menghasilkan output identik apa
+  pun framework yang dipakai konsumen.
+- **`preview/`** adalah app Next.js App Router yang meng-import komponen
+  **langsung dari `src/` (source, bukan `dist/`)** lewat relative import
+  (`../../src/components/...`), supaya Fast Refresh tetap jalan saat kamu
+  mengedit komponen — tidak perlu `npm run build` dulu tiap kali mau lihat
+  perubahan. `preview/package.json` sengaja terpisah dari root dan TIDAK
+  ikut ke-bundle ke package yang di-install konsumen (`files: ["dist"]` di
+  root `package.json` yang menjamin ini, bukan lokasi foldernya).
+- `react`/`react-dom` cuma dideklarasikan di `preview/package.json` — npm
+  workspaces meng-hoist satu-satunya copy itu ke `node_modules` root, jadi
+  komponen (yang secara fisik ada di `root/src`) dan Next.js (yang jalan
+  dari `preview/`) sama-sama resolve ke instance React yang SAMA. Ini
+  penting: dua instance React berbeda adalah penyebab #1 error "Invalid
+  hook call" (lihat [Troubleshooting](#troubleshooting)).
 
 ## Struktur Proyek
 
 ```
-src/
+src/                  # LIBRARY — ini yang di-build & didistribusikan
 ├── components/       # satu folder per komponen (Button/, Input/, Table/, dst)
 ├── lib/cn.ts         # helper gabung className (clsx + tailwind-merge)
-├── pages/            # preview lokal saja — TIDAK diekspor (Showcase.tsx,
-│                     # SimatkulLogo.tsx sebagai contoh isi slot `logo` Sidebar)
 ├── styles/
 │   ├── tokens.css    # definisi @theme Tailwind v4 (warna/font/radius/shadow)
-│   └── index.css     # @import "tailwindcss" + tokens.css
+│   └── index.css     # @import "tailwindcss" + tokens.css (entry Tailwind CLI)
 └── index.ts          # ENTRY POINT package — cuma ini yang diekspor ke konsumen
+
+preview/              # APP NEXT.JS — dev-only, TIDAK ikut ter-publish
+├── app/
+│   ├── layout.tsx    # import CSS global (../../src/styles lewat globals.css)
+│   ├── globals.css   # @import "tailwindcss" + @source ke ../../src/components
+│   ├── page.tsx       # "Component Showcase" — semua komponen dalam satu halaman
+│   └── SimatkulLogo.tsx  # contoh isi slot `logo` Sidebar (SIMATKUL-spesifik)
+└── package.json      # dependency Next.js-nya sendiri, terpisah dari root
 ```
 
 ## Keputusan Arsitektur (untuk yang penasaran/AI)
@@ -589,9 +619,8 @@ alasannya supaya tidak dikira sembarangan:
 
 - **Prop `variant` di `Button` (bukan `type`)**: awalnya memang `type`, tapi
   bentrok dengan atribut native `<button type="submit">` saat generate
-  TypeScript declaration file (`vite-plugin-dts` melempar error). Di-rename
-  jadi `variant` sekaligus menyamakan dengan `Input`/`Alert` yang sudah
-  pakai nama itu.
+  TypeScript declaration file. Di-rename jadi `variant` sekaligus menyamakan
+  dengan `Input`/`Alert` yang sudah pakai nama itu.
 - **`Switch`/`Checkbox`/`Radio` bukan `<input type="checkbox">` native**,
   tapi `<button role="...">` custom yang dikontrol lewat `checked`/
   `onCheckedChange`. Konsisten di seluruh package, dan cocok dengan visual
@@ -622,13 +651,15 @@ alasannya supaya tidak dikira sembarangan:
   [Multi-Brand / Kustomisasi Warna](#multi-brand--kustomisasi-warna)).
   Menambah/mengurangi STEP (bukan sekadar mengganti nilainya) tetap butuh
   keputusan sadar, karena itu mengubah kontrak yang dipakai semua komponen.
-- **`"use client"` ditulis lewat `banner` di `vite.lib.config.ts`, bukan
-  directive di tiap file source**: Vite/Rollup tidak menjamin sebuah
+- **`"use client"` ditulis lewat `banner` di `tsup.config.ts`, bukan
+  directive di tiap file source**: bundler tidak menjamin sebuah
   `"use client"` di source file tetap berada di baris pertama setelah semua
   file di-bundle jadi satu `dist/index.mjs`/`index.cjs`. Menulisnya lewat
-  `rollupOptions.output.banner` memastikan literal itu selalu jadi baris
-  pertama output, apa pun urutan bundling internalnya — sudah diverifikasi
-  langsung dengan membaca beberapa byte pertama hasil build.
+  opsi `banner` tsup memastikan literal itu selalu jadi baris pertama
+  output, apa pun urutan bundling internalnya — sudah diverifikasi langsung
+  dengan membaca beberapa byte pertama hasil build, DAN dengan benar-benar
+  menjalankan Modal/Dropdown (keduanya pakai hooks) di app Next.js sungguhan
+  (`preview/`), bukan cuma percaya klaim di dokumen ini.
 - **`Sidebar`'s `logo` adalah prop wajib, bukan opsional dengan default
   SIMATKUL**: sebelum keputusan multi-project ASSETS ini, `logo` opsional
   dan jatuh ke tulisan "SIMATKUL" kalau kosong — itu artinya project ASSETS
