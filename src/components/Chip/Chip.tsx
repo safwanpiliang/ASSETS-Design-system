@@ -7,10 +7,12 @@ import CloseCircle from '@solar-icons/react/ui/CloseCircle'
 // + "primary" eksplisit karena di Chip, "Default" (abu-abu/neutral) dan warna
 // aksen utama (primary-400) adalah dua pilihan warna yang terpisah — beda
 // dengan Alert yang menyatukan keduanya sebagai satu status "default".
-// border-transparent di semua varian (bukan cuma outline) supaya tinggi
-// chip konsisten 32px/24px — kalau cuma outline yang punya border, box-nya
-// jadi 2px lebih tinggi dari solid/tint.
-const chipVariants = cva('inline-flex items-center rounded-full border border-solid border-transparent', {
+// "outline" pakai inset box-shadow, BUKAN border asli — border sungguhan
+// menambah 2px ke tinggi box (border-box cuma berlaku kalau height eksplisit
+// di-set; di sini tinggi murni dari padding+konten), jadi solid/tint jadi
+// 32px/24px tapi outline jadi 34px/26px kalau pakai border. box-shadow inset
+// dilukis di atas konten tanpa memengaruhi ukuran box sama sekali.
+const chipVariants = cva('inline-flex items-center rounded-full', {
   variants: {
     variant: { solid: '', tint: '', outline: '' },
     status: { default: '', primary: '', secondary: '', error: '', warning: '', success: '' },
@@ -34,15 +36,15 @@ const chipVariants = cva('inline-flex items-center rounded-full border border-so
     { variant: 'tint', status: 'warning', className: 'bg-yellow-200/10 text-yellow-200' },
     { variant: 'tint', status: 'success', className: 'bg-green-200/10 text-green-200' },
 
-    { variant: 'outline', status: 'default', className: 'border-neutral-700 text-neutral-900' },
+    { variant: 'outline', status: 'default', className: 'text-neutral-900 shadow-[inset_0_0_0_1px_var(--color-neutral-700)]' },
     // Outline untuk secondary/error/warning/success diekstrapolasi dari pola
     // "primary" (border sama dengan warna teks) — cuma default & primary yang
     // diverifikasi langsung ke Figma.
-    { variant: 'outline', status: 'primary', className: 'border-primary-400 text-primary-400' },
-    { variant: 'outline', status: 'secondary', className: 'border-secondary-400 text-secondary-400' },
-    { variant: 'outline', status: 'error', className: 'border-red-100 text-red-100' },
-    { variant: 'outline', status: 'warning', className: 'border-yellow-200 text-yellow-200' },
-    { variant: 'outline', status: 'success', className: 'border-green-200 text-green-200' },
+    { variant: 'outline', status: 'primary', className: 'text-primary-400 shadow-[inset_0_0_0_1px_var(--color-primary-400)]' },
+    { variant: 'outline', status: 'secondary', className: 'text-secondary-400 shadow-[inset_0_0_0_1px_var(--color-secondary-400)]' },
+    { variant: 'outline', status: 'error', className: 'text-red-100 shadow-[inset_0_0_0_1px_var(--color-red-100)]' },
+    { variant: 'outline', status: 'warning', className: 'text-yellow-200 shadow-[inset_0_0_0_1px_var(--color-yellow-200)]' },
+    { variant: 'outline', status: 'success', className: 'text-green-200 shadow-[inset_0_0_0_1px_var(--color-green-200)]' },
   ],
   defaultVariants: { variant: 'solid', status: 'default', size: 'md' },
 })
