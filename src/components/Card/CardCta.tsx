@@ -15,7 +15,7 @@ export interface CardCtaProps {
 export function CardCta({ title, description, image, actions, className }: CardCtaProps) {
   return (
     <div className={cn('flex items-center gap-6 rounded-5 bg-white p-6 shadow-e2', className)}>
-      <div className="flex flex-1 flex-col items-start justify-between gap-6 self-stretch">
+      <div className="flex flex-1 flex-col items-start justify-between self-stretch">
         <div className="flex flex-col items-start gap-2">
           <p className="text-h5 font-bold text-neutral-1000">{title}</p>
           {description && <p className="text-b2 text-neutral-700">{description}</p>}

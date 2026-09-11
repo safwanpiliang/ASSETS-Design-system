@@ -613,7 +613,7 @@ export default function ShowcasePage() {
             orientation="vertical"
             className="w-[430px]"
             image={<img src="https://picsum.photos/seed/assets1/464/348" alt="" />}
-            chip={<Chip variant="tint" status="secondary">Kementrian Minat dan Bakat</Chip>}
+            chip={<Chip variant="tint" status="secondary" size="sm">Kementrian Minat dan Bakat</Chip>}
             title="Pekan Olahraga Vokasi dan Vocational Art"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do…"
             actions={
@@ -627,7 +627,7 @@ export default function ShowcasePage() {
             orientation="horizontal"
             className="w-[600px]"
             image={<img src="https://picsum.photos/seed/assets2/282/211" alt="" />}
-            chip={<Chip variant="tint" status="secondary">Kementrian Minat dan Bakat</Chip>}
+            chip={<Chip variant="tint" status="secondary" size="sm">Kementrian Minat dan Bakat</Chip>}
             title="Pekan Olahraga Vokasi dan Vocational Art"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do…"
             actions={

@@ -6,7 +6,7 @@ export interface CardProps {
   /** Elemen `<img>` (atau apa pun) yang mengisi area gambar — pemanggil yang
    * kontrol src/alt, wrapper ini cuma mengatur ukuran & crop-nya. */
   image?: ReactNode
-  /** Biasanya `<Chip variant="tint" status="secondary">Label</Chip>`. */
+  /** Biasanya `<Chip variant="tint" status="secondary" size="sm">Label</Chip>`. */
   chip?: ReactNode
   title: ReactNode
   description?: ReactNode
@@ -37,10 +37,12 @@ export function Card({ orientation = 'vertical', image, chip, title, description
         </div>
       )}
       <div className="flex flex-1 flex-col items-end justify-center gap-8 p-6">
-        <div className="flex w-full flex-col items-start gap-1">
+        {/* h-[98px] persis Figma — dialokasikan untuk chip + judul 1 baris +
+            deskripsi HINGGA 2 baris (line-clamp-2), bukan tinggi acak. */}
+        <div className="flex h-[98px] w-full flex-col items-start gap-1">
           {chip}
           <p className="text-b2 w-full font-bold text-neutral-1000">{title}</p>
-          {description && <p className="text-b3 w-full text-neutral-800">{description}</p>}
+          {description && <p className="text-b3 line-clamp-2 w-full text-neutral-800">{description}</p>}
         </div>
         {actions && <div className="flex items-start gap-2.5">{actions}</div>}
       </div>
