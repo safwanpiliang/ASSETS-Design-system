@@ -1,4 +1,4 @@
-// Entry point library. Halaman di src/pages/ (Kurikulum, Showcase) SENGAJA
+// Entry point library. Halaman di src/pages/ (Showcase, dst) SENGAJA
 // tidak diekspor dari sini — itu cuma alat bantu preview lokal (npm run dev),
 // bukan bagian dari package yang dipakai konsumen.
 

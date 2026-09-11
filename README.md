@@ -7,9 +7,8 @@ tunggal — lihat [Multi-Brand / Kustomisasi Warna](#multi-brand--kustomisasi-wa
 kalau project kamu butuh warna brand sendiri di atas library yang sama.
 
 **SIMATKUL** (Sistem Informasi Manajemen Kurikulum) adalah konsumen pertama
-dan sekaligus contoh acuan library ini — halaman `Kurikulum` di repo ini
-nyata dipakai untuk visual-diff, bukan mockup. Project ASSETS lain memakai
-komponen yang persis sama, cuma beda konfigurasi warna/logo.
+library ini. Project ASSETS lain memakai komponen yang persis sama, cuma
+beda konfigurasi warna/logo.
 
 Styling pakai Tailwind CSS v4 secara internal, tapi **dikompilasi habis ke
 satu file CSS mandiri** — lihat
@@ -22,9 +21,6 @@ ini — kalau kamu asisten AI yang sedang membaca ini untuk membantu seseorang
 integrasi package ini, bagian [Troubleshooting](#troubleshooting) dan
 [Batasan yang Diketahui](#batasan-yang-diketahui-known-limitations) di bawah
 berisi jawaban untuk pertanyaan yang paling sering muncul.
-
-![Contoh halaman Kurikulum dibangun dari komponen di package ini](docs/screenshots/kurikulum-page.png)
-<p align="center"><sub>Halaman nyata di repo ini (<code>src/pages/Kurikulum.tsx</code>) — Sidebar, StatCard, Button, Input, Table, dan Pagination semua dari package ini, bukan mockup.</sub></p>
 
 ---
 
@@ -563,7 +559,7 @@ bug tersembunyi:
 
 ```bash
 npm install
-npm run dev     # buka preview: halaman "Kurikulum" (contoh nyata) + "Component Showcase" (semua komponen)
+npm run dev     # buka preview: halaman "Component Showcase" (semua komponen)
 npm run build   # build library ke dist/ (otomatis jalan lewat "prepare" saat konsumen install dari Git)
 ```
 
@@ -578,7 +574,7 @@ di-install konsumen.
 src/
 ├── components/       # satu folder per komponen (Button/, Input/, Table/, dst)
 ├── lib/cn.ts         # helper gabung className (clsx + tailwind-merge)
-├── pages/            # preview lokal saja — TIDAK diekspor (Kurikulum.tsx, Showcase.tsx,
+├── pages/            # preview lokal saja — TIDAK diekspor (Showcase.tsx,
 │                     # SimatkulLogo.tsx sebagai contoh isi slot `logo` Sidebar)
 ├── styles/
 │   ├── tokens.css    # definisi @theme Tailwind v4 (warna/font/radius/shadow)
