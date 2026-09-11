@@ -30,6 +30,10 @@ import { ScheduleGrid, type ScheduleGridEntry } from '../../src/components/Sched
 import { ScheduleDots } from '../../src/components/ScheduleGrid/ScheduleDots'
 import { Navbar, type NavbarLink } from '../../src/components/Navbar/Navbar'
 import { Footer, type FooterColumn } from '../../src/components/Footer/Footer'
+import { DatePicker } from '../../src/components/DatePicker/DatePicker'
+import { DateRangePicker } from '../../src/components/DatePicker/DateRangePicker'
+import { DateTimePicker } from '../../src/components/DatePicker/DateTimePicker'
+import { MonthPicker } from '../../src/components/DatePicker/MonthPicker'
 import Bolt from '@solar-icons/react/ui/Bolt'
 import Letter from '@solar-icons/react/messages/Letter'
 import { SimatkulLogo } from './SimatkulLogo'
@@ -192,6 +196,11 @@ export default function ShowcasePage() {
   const [modalV, setModalV] = useState(false)
   const [stepperValue, setStepperValue] = useState(2)
   const [inputValue, setInputValue] = useState('')
+  const [dateValue, setDateValue] = useState<Date | null>(new Date(2021, 11, 14))
+  const [rangeValue, setRangeValue] = useState<[Date | null, Date | null]>([new Date(2021, 11, 23), new Date(2021, 11, 27)])
+  const [dateTimeValue, setDateTimeValue] = useState<Date | null>(new Date(2021, 11, 14))
+  const [timeValue, setTimeValue] = useState('18:00')
+  const [monthValue, setMonthValue] = useState({ year: 2021, month: 2 })
 
   return (
     <div className="flex min-h-screen flex-col gap-10 bg-neutral-300 p-10">
@@ -677,6 +686,22 @@ export default function ShowcasePage() {
           emailIcon={<Letter weight="BoldDuotone" />}
           columns={footerColumns}
         />
+      </Section>
+
+      <Section title="Date Picker">
+        <div className="flex flex-wrap items-start gap-6">
+          <DatePicker value={dateValue} onChange={setDateValue} today={new Date(2021, 11, 24)} />
+          <DateRangePicker value={rangeValue} onChange={setRangeValue} today={new Date(2021, 11, 24)} />
+          <DateTimePicker
+            value={dateTimeValue}
+            onChange={setDateTimeValue}
+            today={new Date(2021, 11, 24)}
+            timeSlots={['17:30', '17:45', '18:00', '18:15', '18:30', '18:45']}
+            selectedTime={timeValue}
+            onSelectTime={setTimeValue}
+          />
+          <MonthPicker value={monthValue} onChange={setMonthValue} />
+        </div>
       </Section>
 
       <Section title="Sidebar (dalam kotak terbatas — biasanya full height)">
