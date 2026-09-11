@@ -30,18 +30,23 @@ export interface ScheduleWidgetProps {
 }
 
 export function ScheduleWidget({ header, items, onViewAll, viewAllLabel = 'Lihat Semua', className }: ScheduleWidgetProps) {
+  // Figma punya 2 contoh dengan gap antar-item yang beda: list bar-warna
+  // (accentColor) pakai gap 20px, list ikon pakai gap 16px — bukan salah
+  // ketik, dua nilai itu memang literally berbeda di kedua frame aslinya.
+  const hasIcons = items.some((item) => item.icon)
+
   return (
     <div className={cn('flex size-[360px] flex-col justify-between overflow-hidden rounded-3 bg-white p-6', className)}>
       <div className="flex w-full flex-col items-start gap-8">
         {header}
-        <div className="flex w-full flex-col items-start gap-4">
+        <div className={cn('flex w-full flex-col items-start', hasIcons ? 'gap-4' : 'gap-5')}>
           {items.map((item) => (
             <div key={item.key} className="flex items-center gap-2">
               {item.icon ? (
                 <span className="size-8 shrink-0 [&>svg]:size-full">{item.icon}</span>
               ) : (
                 <span
-                  className="h-[42px] w-1 shrink-0 rounded-2"
+                  className="h-[42px] w-1 shrink-0 rounded-4"
                   style={{ backgroundColor: item.accentColor ?? 'var(--color-secondary-400)' }}
                 />
               )}
@@ -55,7 +60,9 @@ export function ScheduleWidget({ header, items, onViewAll, viewAllLabel = 'Lihat
       </div>
       {onViewAll && (
         <div className="flex w-full justify-end">
-          <Button variant="ghost" size="sm" iconRight={<ArrowRight weight="LineDuotone" />} onClick={onViewAll}>
+          {/* variant="link" (bukan "ghost") — Figma tidak memberi padding
+              sama sekali di tombol ini, cuma gap-4px antara teks & ikon. */}
+          <Button variant="link" size="sm" iconRight={<ArrowRight weight="LineDuotone" />} onClick={onViewAll}>
             {viewAllLabel}
           </Button>
         </div>

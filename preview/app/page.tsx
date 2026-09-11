@@ -498,14 +498,13 @@ export default function ShowcasePage() {
           />
           <ScheduleWidget
             header={
-              <StatCard
-                className="flex-none"
-                variant="color"
-                status="primary"
-                icon={<Calendar weight="BoldDuotone" />}
-                value="Rp 1.109.000"
-                label="Pengeluaran bulan May"
-              />
+              <div className="flex w-full items-start justify-end gap-2 rounded-2 bg-primary-400 p-4">
+                <div className="flex flex-1 flex-col gap-0.5">
+                  <p className="text-b4 text-neutral-300">Pengeluaran bulan May</p>
+                  <p className="text-h5 font-bold text-white">Rp 1.109.000</p>
+                </div>
+                <Button theme="primary" variant="solid" size="sm" iconLeft={<Calendar weight="BoldDuotone" />} />
+              </div>
             }
             items={[
               { key: '1', title: 'Reading time', time: '03:00 PM - 04:00 PM', icon: <StarIcon weight="BoldDuotone" className="text-secondary-400" /> },
