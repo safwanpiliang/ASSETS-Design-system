@@ -24,7 +24,10 @@ import { Breadcrumbs, type BreadcrumbItem } from '../../src/components/Breadcrum
 import { Chip } from '../../src/components/Chip/Chip'
 import { Card } from '../../src/components/Card/Card'
 import { CardCta } from '../../src/components/Card/CardCta'
+import { ScheduleWidget } from '../../src/components/ScheduleWidget/ScheduleWidget'
 import { SimatkulLogo } from './SimatkulLogo'
+import Calendar from '@solar-icons/react/time/Calendar'
+import StarIcon from '@solar-icons/react/like/Star'
 
 import Database from '@solar-icons/react/ui/Database'
 import FileSmile from '@solar-icons/react/files/FileSmile'
@@ -433,9 +436,47 @@ export default function ShowcasePage() {
       </Section>
 
       <Section title="StatCard">
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <StatCard icon={<BookmarkSquare weight="BoldDuotone" />} value={425} label="Data Kurikulum" />
           <StatCard icon={<BookmarkSquare weight="BoldDuotone" />} value={60} label="Daftar Ruang" />
+          <StatCard variant="color" status="secondary" icon={<Database weight="BoldDuotone" />} value="Rp 1.109.000" label="Pengeluaran bulan ini" />
+        </div>
+      </Section>
+
+      <Section title="ScheduleWidget">
+        <div className="flex flex-wrap gap-6">
+          <ScheduleWidget
+            header={
+              <div className="flex w-full items-center gap-2.5">
+                <Text variant="h5" className="flex-1">27 May</Text>
+                <Button theme="primary" variant="solid" size="sm" iconLeft={<Calendar weight="BoldDuotone" />} />
+              </div>
+            }
+            items={[
+              { key: '1', title: 'Reading time', time: '03:00 PM - 04:00 PM', accentColor: 'var(--color-secondary-400)' },
+              { key: '2', title: 'Reading time', time: '03:00 PM - 04:00 PM', accentColor: 'var(--color-secondary-400)' },
+              { key: '3', title: 'Reading time', time: '03:00 PM - 04:00 PM', accentColor: 'var(--color-secondary-400)' },
+            ]}
+            onViewAll={() => {}}
+          />
+          <ScheduleWidget
+            header={
+              <StatCard
+                className="flex-none"
+                variant="color"
+                status="primary"
+                icon={<Calendar weight="BoldDuotone" />}
+                value="Rp 1.109.000"
+                label="Pengeluaran bulan May"
+              />
+            }
+            items={[
+              { key: '1', title: 'Reading time', time: '03:00 PM - 04:00 PM', icon: <StarIcon weight="BoldDuotone" className="text-secondary-400" /> },
+              { key: '2', title: 'Reading time', time: '03:00 PM - 04:00 PM', icon: <StarIcon weight="BoldDuotone" className="text-secondary-400" /> },
+              { key: '3', title: 'Reading time', time: '03:00 PM - 04:00 PM', icon: <StarIcon weight="BoldDuotone" className="text-secondary-400" /> },
+            ]}
+            onViewAll={() => {}}
+          />
         </div>
       </Section>
 
