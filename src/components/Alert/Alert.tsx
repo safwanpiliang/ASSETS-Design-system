@@ -7,21 +7,26 @@ import { cn } from '../../lib/cn'
  * "Alert" (state) -> warning (state Figma-nya bentrok nama dengan komponennya sendiri).
  */
 // rounded-3 = Radius.3 (12px), lihat light.tokens.json
-const alertVariants = cva('flex items-start gap-4 rounded-3 border border-solid p-4', {
+// Border cuma ada di variant="outline" (1.5px, bukan default 1px) — Figma
+// filled TIDAK punya border sama sekali, jadi base class-nya sengaja tanpa
+// border supaya filled tidak ikut kebawa border tak terlihat/mengambil ruang.
+const alertVariants = cva('flex items-start gap-4 rounded-3 p-4', {
   variants: {
-    variant: { filled: '', outline: '' },
+    variant: { filled: '', outline: 'border-[1.5px] border-solid' },
     status: { default: '', secondary: '', success: '', warning: '', error: '' },
   },
   compoundVariants: [
-    { variant: 'filled', status: 'default', className: 'border-primary-500 bg-primary-500' },
+    // Filled default/secondary pakai step -400 (bukan -500) — dikoreksi
+    // 2026-09 setelah pemilik design system mengubahnya langsung di Figma.
+    { variant: 'filled', status: 'default', className: 'bg-primary-400' },
     { variant: 'outline', status: 'default', className: 'border-primary-500 bg-primary-400/10' },
-    { variant: 'filled', status: 'secondary', className: 'border-secondary-500 bg-secondary-500' },
+    { variant: 'filled', status: 'secondary', className: 'bg-secondary-400' },
     { variant: 'outline', status: 'secondary', className: 'border-secondary-500 bg-secondary-400/10' },
-    { variant: 'filled', status: 'success', className: 'border-green-200 bg-green-200' },
+    { variant: 'filled', status: 'success', className: 'bg-green-200' },
     { variant: 'outline', status: 'success', className: 'border-green-200 bg-green-200/10' },
-    { variant: 'filled', status: 'warning', className: 'border-yellow-200 bg-yellow-200' },
+    { variant: 'filled', status: 'warning', className: 'bg-yellow-200' },
     { variant: 'outline', status: 'warning', className: 'border-yellow-200 bg-yellow-200/10' },
-    { variant: 'filled', status: 'error', className: 'border-red-200 bg-red-200' },
+    { variant: 'filled', status: 'error', className: 'bg-red-200' },
     // Tint pakai Red/100 (bukan /200) — mengikuti definisi alpha "/10" di Color Main.
     { variant: 'outline', status: 'error', className: 'border-red-200 bg-red-100/10' },
   ],
