@@ -2,9 +2,11 @@ import { cn } from '../../lib/cn'
 import AltArrowLeft from '@solar-icons/react/arrows/AltArrowLeft'
 import AltArrowRight from '@solar-icons/react/arrows/AltArrowRight'
 
+// Ukuran item 40px (bukan 48px) dan teks text-b3 (bukan b2) — nilai persis
+// dari Figma, sempat salah dipakai lebih besar sebelumnya.
 const itemBase =
-  'flex size-12 shrink-0 items-center justify-center rounded-full text-b2 transition-colors ' +
-  'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-400/10'
+  'flex size-10 shrink-0 items-center justify-center rounded-full text-b3 transition-colors ' +
+  'focus-visible:outline-none focus-visible:bg-white focus-visible:ring-4 focus-visible:ring-primary-400/10'
 
 export interface PaginationProps {
   page: number
@@ -32,7 +34,7 @@ export function Pagination({ page, totalPages, onPageChange, className }: Pagina
         onClick={() => onPageChange(page - 1)}
         className={cn(itemBase, 'text-primary-400 hover:bg-primary-400/10 disabled:pointer-events-none disabled:text-neutral-700')}
       >
-        <span className="size-6 [&>svg]:size-full">
+        <span className="size-5 [&>svg]:size-full">
           <AltArrowLeft weight="LineDuotone" />
         </span>
       </button>
@@ -59,7 +61,7 @@ export function Pagination({ page, totalPages, onPageChange, className }: Pagina
         onClick={() => onPageChange(page + 1)}
         className={cn(itemBase, 'text-primary-400 hover:bg-primary-400/10 disabled:pointer-events-none disabled:text-neutral-700')}
       >
-        <span className="size-6 [&>svg]:size-full">
+        <span className="size-5 [&>svg]:size-full">
           <AltArrowRight weight="LineDuotone" />
         </span>
       </button>
