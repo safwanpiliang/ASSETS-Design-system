@@ -1,8 +1,18 @@
-# SIMATKUL Design System
+# ASSETS Design System
 
-Component library React untuk aplikasi SIMATKUL, dibangun langsung dari design
-system Figma resmi ("SIMATKUL — UI Workspace"). Styling pakai Tailwind CSS v4
-secara internal, tapi **dikompilasi habis ke satu file CSS mandiri** — lihat
+Component library React (kompatibel Next.js) untuk project-project **ASSETS
+— Association of Software Engineering Student**. Dibangun dari design system
+Figma resmi, dan dipakai lintas project HIMA, bukan cuma satu aplikasi
+tunggal — lihat [Multi-Brand / Kustomisasi Warna](#multi-brand--kustomisasi-warna)
+kalau project kamu butuh warna brand sendiri di atas library yang sama.
+
+**SIMATKUL** (Sistem Informasi Manajemen Kurikulum) adalah konsumen pertama
+dan sekaligus contoh acuan library ini — halaman `Kurikulum` di repo ini
+nyata dipakai untuk visual-diff, bukan mockup. Project ASSETS lain memakai
+komponen yang persis sama, cuma beda konfigurasi warna/logo.
+
+Styling pakai Tailwind CSS v4 secara internal, tapi **dikompilasi habis ke
+satu file CSS mandiri** — lihat
 [Apakah saya wajib install Tailwind?](#apakah-saya-wajib-install-tailwind) di
 bawah sebelum bingung soal ini.
 
@@ -23,11 +33,13 @@ berisi jawaban untuk pertanyaan yang paling sering muncul.
 - [Prasyarat](#prasyarat)
 - [Instalasi](#instalasi)
 - [Quick Start](#quick-start)
+- [Pakai di Next.js](#pakai-di-nextjs)
 - [Apakah saya wajib install Tailwind?](#apakah-saya-wajib-install-tailwind)
 - [Katalog Komponen](#katalog-komponen)
 - [Design Tokens](#design-tokens)
 - [Ikon (Solar Icons)](#ikon-solar-icons)
-- [Kustomisasi / Theming](#kustomisasi--theming)
+- [Multi-Brand / Kustomisasi Warna](#multi-brand--kustomisasi-warna)
+- [Kustomisasi Lain (Sidebar, dst)](#kustomisasi-lain-sidebar-dst)
 - [Update ke Versi Terbaru](#update-ke-versi-terbaru)
 - [Troubleshooting](#troubleshooting)
 - [Batasan yang Diketahui (Known Limitations)](#batasan-yang-diketahui-known-limitations)
@@ -60,8 +72,12 @@ Ini akan otomatis ambil branch `main` (versi terbaru). Kalau mau pin ke versi
 yang tidak berubah-ubah, pakai tag tertentu:
 
 ```bash
-npm install github:safwanpiliang/ASSETS-Design-system#v0.1.0
+npm install github:safwanpiliang/ASSETS-Design-system#v0.2.0
 ```
+
+> Nama package di `package.json` kamu setelah install adalah
+> **`assets-design-system`** — dipakai persis begitu di semua contoh import
+> di bawah, walau nama repo Git-nya `ASSETS-Design-system`.
 
 **Apa yang terjadi di balik layar saat `npm install`:** karena ini install
 dari Git (bukan tarball npm registry siap pakai), npm akan clone repo ini,
@@ -73,11 +89,11 @@ Kalau proses ini gagal, lihat [Troubleshooting](#troubleshooting).
 
 ```tsx
 // main.tsx / entry point aplikasi kamu — import CSS-nya SEKALI SAJA, di sini
-import 'simatkul-design-system/style.css'
+import 'assets-design-system/style.css'
 ```
 
 ```tsx
-import { Button, Input, Table, type TableColumn } from 'simatkul-design-system'
+import { Button, Input, Table, type TableColumn } from 'assets-design-system'
 
 function ContohForm() {
   return (
@@ -95,6 +111,48 @@ function ContohForm() {
 > `type` — `type` di `Button` adalah atribut native HTML (`submit`/`reset`/
 > `button`), disengaja dipisah supaya tidak bentrok (lihat
 > [Keputusan Arsitektur](#keputusan-arsitektur-untuk-yang-penasaranai)).
+
+## Pakai di Next.js
+
+Semua komponen di package ini sudah ditandai **Client Component**
+(`"use client"` ada otomatis di baris pertama `dist/index.mjs`/`dist/index.cjs`
+hasil build) — kamu **tidak perlu** menambahkan `"use client"` apa pun sendiri
+di sisi konsumen, mau App Router maupun Pages Router. Komponen dari package
+ini boleh langsung dirender dari dalam Server Component (misalnya
+`app/page.tsx` tanpa `"use client"` di file itu sendiri) — Next.js
+memperbolehkan Server Component me-render Client Component seperti biasa.
+
+**App Router** (`app/layout.tsx`):
+
+```tsx
+import 'assets-design-system/style.css'
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="id">
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+**Pages Router** (`pages/_app.tsx`):
+
+```tsx
+import 'assets-design-system/style.css'
+import type { AppProps } from 'next/app'
+
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />
+}
+```
+
+Tidak ada penyesuaian lain yang dibutuhkan — tidak ada komponen yang
+mengakses `window`/`document` saat render (cuma di dalam `useEffect`, yang
+memang client-only dan aman), dan semua ID yang di-generate otomatis
+(`Input`, `RadioField`, `CheckboxField`, `SwitchField`) pakai `useId()` React
+yang dijamin sinkron antara render server dan client — jadi tidak akan ada
+warning hydration mismatch.
 
 ## Apakah saya wajib install Tailwind?
 
@@ -120,7 +178,7 @@ kamu sendiri:
 
 ## Katalog Komponen
 
-Semua diimpor dari `'simatkul-design-system'` (named export).
+Semua diimpor dari `'assets-design-system'` (named export).
 
 | Komponen | Ringkas |
 |---|---|
@@ -138,7 +196,7 @@ Semua diimpor dari `'simatkul-design-system'` (named export).
 | `StatCard` | Kartu statistik kecil (ikon + angka + label). |
 | `Table` | Data-driven: `columns` (dengan `render` per kolom untuk sel custom), `data`, `rowKey`. Opsional `toolbar`. |
 | `Pagination` | `page`, `totalPages`, `onPageChange`. ⚠️ belum ada pola ellipsis untuk puluhan halaman — lihat [Batasan](#batasan-yang-diketahui-known-limitations). |
-| `Sidebar` | Nav aplikasi, fill-height otomatis di parent flex. `items` (data-driven), `logo` (slot penuh, WAJIB diisi ulang kalau dipakai project lain), `activeColor` (override warna aktif tanpa fork token). |
+| `Sidebar` | Nav aplikasi, fill-height otomatis di parent flex. `items` (data-driven), `logo` (slot penuh, **prop wajib** — tidak ada default brand), `activeColor` (override warna aktif tanpa fork token). |
 | `Modal` | Dialog generik: `title`+`description`+`children` bebas+`actions`, `buttonLayout` (horizontal/vertical). Tutup lewat Escape/klik-luar/tombol aksi — tidak ada tombol X. |
 
 Screenshot di bawah diambil langsung dari halaman **Component Showcase**
@@ -312,28 +370,83 @@ Konvensi yang dipakai di seluruh package ini: **Bold Duotone** untuk ikon
 konten/makna (ikon di dalam field, kartu, menu), **Line Duotone** untuk ikon
 UI/affordance (chevron, panah, kaca pembesar).
 
-## Kustomisasi / Theming
+## Multi-Brand / Kustomisasi Warna
 
-Kebanyakan komponen otomatis ikut token di atas dan tidak perlu dikustom.
-Satu pengecualian: `Sidebar`, yang dirancang untuk dipakai ulang di project
-lain dengan branding beda:
+Library ini dipakai lintas project ASSETS (SIMATKUL, dan project HIMA
+lainnya ke depan), yang masing-masing bisa saja punya warna brand sendiri.
+**Nama step warna (`primary-100`…`700`, `neutral-100`…`1000`, dst) adalah
+kontrak tetap** dan tidak akan berubah — tapi **nilai hex di baliknya bisa
+di-override penuh per-project**, tanpa fork package ini dan tanpa ubah satu
+baris kode komponen pun.
+
+Ini bekerja karena setiap warna di package ini dikompilasi Tailwind v4
+menjadi **CSS custom property asli** (bukan hex yang di-inline), lalu setiap
+utility class (`bg-primary-400`, `text-primary-400`, dst) memakai
+`var(--color-primary-400)` sebagai nilainya. Cukup deklarasikan ulang
+variable itu di CSS project kamu sendiri, **setelah** import
+`assets-design-system/style.css`:
+
+```css
+/* app/globals.css milik project ASSETS lain, MISALNYA "SIGNAL" */
+:root {
+  --color-primary-400: #7c3aed;
+  --color-primary-500: #6d28d9;
+  --color-primary-600: #5b21b6;
+  /* ...isi step lain yang kamu pakai, sisanya tetap ikut default SIMATKUL */
+}
+```
+
+> **Kenapa ini otomatis menang tanpa peduli urutan import CSS:** token warna
+> package ini dideklarasikan Tailwind di dalam `@layer theme`. Aturan CSS
+> Cascade Layers: **style TANPA layer SELALU menang atas style DI DALAM
+> layer manapun**, apa pun urutan importnya. Selama CSS override kamu
+> ditulis normal (tidak dibungkus `@layer` sendiri), dia otomatis menang.
+
+Kamu tidak wajib override semua 21 warna — cukup step yang benar-benar
+dipakai project kamu berbeda dari default SIMATKUL. Step yang tidak
+di-override otomatis tetap pakai nilai default.
+
+### Daftar nama CSS variable per warna
+
+| Keluarga | Variable |
+|---|---|
+| `primary` | `--color-primary-100` … `--color-primary-700` |
+| `secondary` | `--color-secondary-100` … `--color-secondary-700` |
+| `neutral` | `--color-neutral-100` … `--color-neutral-1000` |
+| `red` | `--color-red-100`, `--color-red-200` |
+| `yellow` | `--color-yellow-100`, `--color-yellow-200` |
+| `green` | `--color-green-100`, `--color-green-200` |
+
+Nilai default lengkap tiap variable ada di tabel
+[Design Tokens](#design-tokens) di atas.
+
+## Kustomisasi Lain (Sidebar, dst)
+
+Di luar warna, `Sidebar` juga butuh dikustom per-project karena logo/brand
+mark jelas beda tiap organisasi:
 
 ```tsx
 <Sidebar
+  logo={<MyOrgLogo />} // WAJIB diisi — tidak ada default brand tertentu
   items={menuItems}
-  activeColor="#7C3AED" // override warna aksen menu aktif, tanpa fork token
-  logo={<MyCompanyLogo />} // ganti logo SIMATKUL dengan punya sendiri
+  activeColor="#7C3AED" // opsional: override cepat 1 warna tanpa lewat CSS variable global
 />
 ```
 
-`activeColor` bekerja lewat CSS variable dengan fallback
-(`var(--sb-active, var(--color-primary-400))`) — kalau tidak diisi, otomatis
-pakai token `primary-400` bawaan.
+- **`logo` wajib diisi** — Sidebar sengaja tidak punya default brand apa pun
+  (bukan SIMATKUL, bukan ASSETS), supaya tidak ada branding yang salah
+  kepakai secara diam-diam kalau kamu lupa mengisinya di project baru.
+- **`activeColor`** adalah jalan pintas untuk override SATU warna aksen
+  (dipakai kalau kamu cuma butuh ganti warna Sidebar ini saja, tanpa
+  menyentuh CSS global) — bekerja lewat CSS variable dengan fallback
+  (`var(--sb-active, var(--color-primary-400))`). Untuk override yang
+  konsisten ke SELURUH komponen (bukan cuma Sidebar), pakai pendekatan CSS
+  variable global di [bagian sebelumnya](#multi-brand--kustomisasi-warna).
 
 ## Update ke Versi Terbaru
 
 ```bash
-npm update simatkul-design-system
+npm update assets-design-system
 ```
 
 Ini cuma benar-benar menarik versi baru kalau `package.json` kamu merujuk ke
@@ -343,7 +456,7 @@ manual nomor tag-nya lalu `npm install` ulang.
 ## Troubleshooting
 
 **Komponen tampil polos/tidak ada styling sama sekali**
-→ Lupa `import 'simatkul-design-system/style.css'` di entry point aplikasi.
+→ Lupa `import 'assets-design-system/style.css'` di entry point aplikasi.
 Harus diimpor tepat satu kali, di file paling atas (mis. `main.tsx`).
 
 **Ikon tidak muncul / kosong**
@@ -358,7 +471,7 @@ kecil/tidak proporsional, pastikan wrapper ikon custom kamu punya class
 begitu clone selesai. Kalau gagal, coba jalankan manual untuk lihat pesan
 errornya:
 ```bash
-cd node_modules/simatkul-design-system && npm run build
+cd node_modules/assets-design-system && npm run build
 ```
 Penyebab paling umum: versi Node.js terlalu lama (butuh 18+), atau cache
 `node_modules/.vite` di dalam package basi — hapus `node_modules/.vite` di
@@ -372,8 +485,8 @@ dalam folder package tersebut lalu install ulang.
 project kamu pakai monorepo/workspace dengan hoisting yang aneh, cek dengan
 `npm ls react` dan pastikan cuma ada satu versi.
 
-**TypeScript: `Cannot find module 'simatkul-design-system'`**
-→ Cek `node_modules/simatkul-design-system/dist/` benar-benar ada isinya
+**TypeScript: `Cannot find module 'assets-design-system'`**
+→ Cek `node_modules/assets-design-system/dist/` benar-benar ada isinya
 (`index.mjs`, `index.d.ts`, dst). Kalau kosong, `prepare` gagal jalan diam-
 diam — lihat poin "npm install gagal" di atas.
 
@@ -393,6 +506,35 @@ tinggi yang menutupinya secara visual.
 → Prop untuk gaya visual Button namanya `variant`, bukan `type`. `type` di
 Button itu atribut native HTML button (`submit`/`reset`/`button`). Ini
 perubahan yang disengaja (lihat [Keputusan Arsitektur](#keputusan-arsitektur-untuk-yang-penasaranai)).
+
+**TypeScript error: `Property 'logo' is missing` di `<Sidebar>`**
+→ Bukan bug, ini disengaja — `Sidebar` tidak punya logo default (lihat
+[Kustomisasi Lain](#kustomisasi-lain-sidebar-dst)). Isi prop `logo` dengan
+brand mark project kamu sendiri.
+
+**Warna hasil override (`--color-primary-400`, dst.) tidak ke-apply**
+→ Cek dua hal: (1) CSS override kamu ditulis **setelah** import
+`assets-design-system/style.css` di urutan file/bundling, dan (2) override
+kamu **tidak dibungkus `@layer`** milik kamu sendiri — kalau dibungkus,
+override itu jadi sama-sama "layered" dan urutan importlah yang menentukan
+siapa menang, bukan otomatis menang seperti dijelaskan di
+[Multi-Brand / Kustomisasi Warna](#multi-brand--kustomisasi-warna).
+
+**Next.js: warning hydration mismatch**
+→ Seharusnya tidak terjadi dari komponen package ini (semua ID pakai
+`useId()` React yang SSR-safe) — lihat [Pakai di Next.js](#pakai-di-nextjs).
+Kalau tetap muncul, kemungkinan besar sumbernya kode di project kamu sendiri
+(mis. format tanggal/`Math.random()` yang beda antara server & client),
+bukan dari komponen ini.
+
+**Next.js: error `"use client"` atau komponen tidak interaktif (klik tidak
+bereaksi)**
+→ Semua komponen package ini sudah otomatis punya `"use client"` di bundle
+hasil build (lihat [Pakai di Next.js](#pakai-di-nextjs)) — kamu tidak perlu
+menambahkannya sendiri. Kalau tombol/interaksi tetap tidak jalan, cek versi
+`next` dan `react` project kamu cukup baru untuk App Router (Next.js 13.4+),
+dan pastikan tidak ada `output: 'export'` yang tidak sengaja mematikan
+sebagian fitur client-side project kamu sendiri (bukan dari package ini).
 
 ## Batasan yang Diketahui (Known Limitations)
 
@@ -436,7 +578,8 @@ di-install konsumen.
 src/
 ├── components/       # satu folder per komponen (Button/, Input/, Table/, dst)
 ├── lib/cn.ts         # helper gabung className (clsx + tailwind-merge)
-├── pages/            # preview lokal saja — TIDAK diekspor (Kurikulum.tsx, Showcase.tsx)
+├── pages/            # preview lokal saja — TIDAK diekspor (Kurikulum.tsx, Showcase.tsx,
+│                     # SimatkulLogo.tsx sebagai contoh isi slot `logo` Sidebar)
 ├── styles/
 │   ├── tokens.css    # definisi @theme Tailwind v4 (warna/font/radius/shadow)
 │   └── index.css     # @import "tailwindcss" + tokens.css
@@ -474,3 +617,26 @@ alasannya supaya tidak dikira sembarangan:
   diganti ke warna terdekat**, bukan ditambahkan sebagai token baru —
   aturan eksplisit dari pemilik design system (lihat
   [Batasan yang Diketahui](#batasan-yang-diketahui-known-limitations)).
+- **Nama step warna (`primary-400`, `neutral-1000`, dst.) adalah kontrak
+  tetap; nilai hex di baliknya tidak**: package ini dipakai lintas project
+  ASSETS yang bisa punya warna brand beda-beda. Supaya komponen tetap satu
+  kode yang sama di semua project, yang dikunci adalah BENTUK skalanya
+  (jumlah step per keluarga warna), bukan nilai hex-nya — nilai hex boleh
+  di-override penuh lewat CSS variable (lihat
+  [Multi-Brand / Kustomisasi Warna](#multi-brand--kustomisasi-warna)).
+  Menambah/mengurangi STEP (bukan sekadar mengganti nilainya) tetap butuh
+  keputusan sadar, karena itu mengubah kontrak yang dipakai semua komponen.
+- **`"use client"` ditulis lewat `banner` di `vite.lib.config.ts`, bukan
+  directive di tiap file source**: Vite/Rollup tidak menjamin sebuah
+  `"use client"` di source file tetap berada di baris pertama setelah semua
+  file di-bundle jadi satu `dist/index.mjs`/`index.cjs`. Menulisnya lewat
+  `rollupOptions.output.banner` memastikan literal itu selalu jadi baris
+  pertama output, apa pun urutan bundling internalnya — sudah diverifikasi
+  langsung dengan membaca beberapa byte pertama hasil build.
+- **`Sidebar`'s `logo` adalah prop wajib, bukan opsional dengan default
+  SIMATKUL**: sebelum keputusan multi-project ASSETS ini, `logo` opsional
+  dan jatuh ke tulisan "SIMATKUL" kalau kosong — itu artinya project ASSETS
+  lain yang lupa mengisi `logo` akan diam-diam menampilkan branding SIMATKUL
+  di aplikasi mereka sendiri. Diperbaiki dengan mewajibkan `logo` diisi
+  eksplisit di setiap pemanggilan; TypeScript akan menegur di compile-time
+  kalau lupa, bukan gagal diam-diam di runtime.

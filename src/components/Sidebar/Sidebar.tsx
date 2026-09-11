@@ -2,7 +2,6 @@ import type { CSSProperties, ReactNode } from 'react'
 import { cn } from '../../lib/cn'
 import { Avatar } from '../Avatar/Avatar'
 import { Button } from '../Button/Button'
-import NotebookBookmark from '@solar-icons/react/school/NotebookBookmark'
 import Logout3 from '@solar-icons/react/arrows-action/Logout3'
 
 export interface SidebarItem {
@@ -20,10 +19,11 @@ export interface SidebarUser {
 }
 
 export interface SidebarProps {
-  /** Slot logo penuh (ikon + nama brand, atau elemen apa pun). Kalau kosong,
-   * dipakai contoh default "SIMATKUL" — project lain WAJIB mengisi ini
-   * dengan branding mereka sendiri saat memakai ulang komponen ini. */
-  logo?: ReactNode
+  /** Slot logo penuh (ikon + nama brand, atau elemen apa pun) — WAJIB diisi.
+   * Komponen ini dipakai lintas project ASSETS dengan branding berbeda-beda,
+   * jadi sengaja tidak ada default brand tertentu (mis. SIMATKUL) yang bisa
+   * ketinggalan/salah kepakai di project lain. */
+  logo: ReactNode
   items: SidebarItem[]
   user?: SidebarUser
   onLogout?: () => void
@@ -52,12 +52,7 @@ export function Sidebar({ logo, items, user, onLogout, activeColor, className }:
     >
       <div className="flex w-full flex-col items-start gap-12">
         <div className="flex h-28 w-full items-center justify-center border-b border-neutral-300 px-10 py-10">
-          {logo ?? (
-            <div className="flex items-center gap-2.5">
-              <NotebookBookmark weight="BoldDuotone" className="size-12 text-primary-500" />
-              <span className="text-h7 font-bold text-primary-500">SIMATKUL</span>
-            </div>
-          )}
+          {logo}
         </div>
 
         <ul className="flex w-full flex-col items-start gap-2">

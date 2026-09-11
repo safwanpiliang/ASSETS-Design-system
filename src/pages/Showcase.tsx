@@ -18,6 +18,7 @@ import { Avatar, type AvatarSize } from '../components/Avatar/Avatar'
 import { StatCard } from '../components/StatCard/StatCard'
 import { Table, type TableColumn } from '../components/Table/Table'
 import { Sidebar, type SidebarItem } from '../components/Sidebar/Sidebar'
+import { SimatkulLogo } from './SimatkulLogo'
 
 import Database from '@solar-icons/react/ui/Database'
 import FileSmile from '@solar-icons/react/files/FileSmile'
@@ -434,7 +435,7 @@ export default function ShowcasePage() {
 
       <Section title="Sidebar (dalam kotak terbatas — biasanya full height)">
         <div className="flex h-[420px] w-fit overflow-hidden rounded-2 border border-neutral-500">
-          <Sidebar items={demoNavItems} user={{ name: 'Admin 1' }} onLogout={() => {}} />
+          <Sidebar logo={<SimatkulLogo />} items={demoNavItems} user={{ name: 'Admin 1' }} onLogout={() => {}} />
         </div>
       </Section>
     </div>

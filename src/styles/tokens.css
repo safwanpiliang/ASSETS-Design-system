@@ -75,7 +75,8 @@
   --radius-none: 0px;
   --radius-full: 999px;
 
-  /* Spacing & Stroke SENGAJA TIDAK didefinisikan di sini — lihat komentar di
-     style-dictionary.config.mjs. Nilainya ada di tokens.json; pemetaan ke
-     utility Tailwind yang sudah ada didokumentasikan di simatkul-spacing-stroke.md */
+  /* Spacing & Stroke SENGAJA TIDAK didefinisikan sebagai custom property
+     --spacing-N atau --stroke-N di sini — itu akan menimpa skala --spacing
+     bawaan Tailwind secara diam-diam. Dipetakan ke utility Tailwind standar
+     (p-2, border-2, dst) — lihat README bagian "Radius, Shadow, Spacing". */
 }

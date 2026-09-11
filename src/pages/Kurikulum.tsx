@@ -1,4 +1,5 @@
 import { Sidebar, type SidebarItem } from '../components/Sidebar/Sidebar'
+import { SimatkulLogo } from './SimatkulLogo'
 import { Button } from '../components/Button/Button'
 import { Input } from '../components/Input/Input'
 import { StatCard } from '../components/StatCard/StatCard'
@@ -90,7 +91,7 @@ export default function KurikulumPage() {
 
   return (
     <div className="flex min-h-screen bg-neutral-300">
-      <Sidebar items={navItems} user={{ name: 'Admin 1' }} onLogout={() => alert('Logout')} />
+      <Sidebar logo={<SimatkulLogo />} items={navItems} user={{ name: 'Admin 1' }} onLogout={() => alert('Logout')} />
 
       <main className="flex-1 p-10">
         {/* Header */}

@@ -16,7 +16,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'SimatkulDesignSystem',
+      name: 'AssetsDesignSystem',
       formats: ['es', 'cjs'],
       fileName: (format) => `index.${format === 'es' ? 'mjs' : 'cjs'}`,
     },
@@ -26,6 +26,12 @@ export default defineConfig({
       output: {
         globals: { react: 'React', 'react-dom': 'ReactDOM' },
         assetFileNames: 'style.css',
+        // Semua komponen di package ini pakai hooks (useState/useEffect/dst),
+        // jadi wajib ditandai Client Component untuk Next.js App Router.
+        // Ditulis lewat banner (bukan directive di source file) karena Vite/
+        // Rollup tidak menjamin "use client" di source tetap jadi baris
+        // pertama setelah semua file di-bundle jadi satu output.
+        banner: "'use client';",
       },
     },
     cssCodeSplit: false,

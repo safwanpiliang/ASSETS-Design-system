@@ -1,6 +1,11 @@
 {
-  "name": "simatkul-design-system",
-  "version": "0.1.0",
+  "name": "assets-design-system",
+  "version": "0.2.0",
+  "description": "Component library React (kompatibel Next.js) untuk project-project ASSETS (Association of Software Engineering Student).",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safwanpiliang/ASSETS-Design-system.git"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",

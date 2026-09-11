@@ -175,7 +175,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className={cn(buttonVariants({ theme, variant, size }), className)}
       {...props}
     >
-      {/* Ganti dengan icon set asli SIMATKUL — ini masih placeholder figr.design */}
       {iconLeft && <span className="size-5 shrink-0 [&>svg]:size-full">{iconLeft}</span>}
       {children}
       {iconRight && <span className="size-5 shrink-0 [&>svg]:size-full">{iconRight}</span>}
