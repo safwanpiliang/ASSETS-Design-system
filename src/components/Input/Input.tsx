@@ -8,7 +8,7 @@ import { cn } from '../../lib/cn'
  * pseudo-class (:hover, :focus-within, :disabled), validasi lewat prop `status`.
  */
 const wrapperVariants = cva(
-  'flex items-center gap-3 border border-solid transition-colors ' +
+  'flex items-center gap-3 border-[1.5px] border-solid transition-colors ' +
     'focus-within:border-primary-400 ' +
     'has-[:disabled]:!border-neutral-400 has-[:disabled]:bg-neutral-200',
   {
